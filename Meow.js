@@ -23,19 +23,25 @@ yes2Btn.addEventListener('click', () => {
     }, 6000);
 });
 
-function moveButton(btn) {
+function moveButton(btn, event) {
     const containerRect = container.getBoundingClientRect();
     const btnRect = btn.getBoundingClientRect();
+    let newTop, newLeft;
 
-    const newTop = Math.random() * (containerRect.height - btnRect.height);
-    const newLeft = Math.random() * (containerRect.width - btnRect.width);
+    do {
+        newTop = Math.random() * (containerRect.height - btnRect.height);
+        newLeft = Math.random() * (containerRect.width - btnRect.width);
+    } while (
+        Math.abs(event.clientX - (containerRect.left + newLeft)) < 80 &&
+        Math.abs(event.clientY - (containerRect.top + newTop)) < 80
+    );
 
     btn.style.position = 'absolute';
     btn.style.top = `${newTop}px`;
     btn.style.left = `${newLeft}px`;
 }
 
-noBtn.addEventListener('mouseover', () => moveButton(noBtn));
-noBtn.addEventListener('click', () => moveButton(noBtn));
-no2Btn.addEventListener('mouseover', () => moveButton(no2Btn));
-no2Btn.addEventListener('click', () => moveButton(no2Btn));
+noBtn.addEventListener('mouseover', (e) => moveButton(noBtn, e));
+noBtn.addEventListener('click', (e) => moveButton(noBtn, e));
+no2Btn.addEventListener('mouseover', (e) => moveButton(no2Btn, e));
+no2Btn.addEventListener('click', (e) => moveButton(no2Btn, e));
